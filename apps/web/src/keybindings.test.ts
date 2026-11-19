@@ -237,6 +237,40 @@ describe("effectiveShortcutsForCommand", () => {
   });
 });
 
+describe("rename thread shortcut", () => {
+  it.each(["MacIntel", "Win32", "Linux"])(
+    "renames from chat and preserves panel shortcuts on %s",
+    (platform) => {
+      const input = event({ key: "F2" });
+      assert.equal(
+        resolveShortcutCommand(input, DEFAULT_RESOLVED_KEYBINDINGS, { platform }),
+        "thread.rename",
+      );
+      assert.equal(
+        resolveShortcutCommand(input, DEFAULT_RESOLVED_KEYBINDINGS, {
+          platform,
+          context: { previewFocus: true },
+        }),
+        null,
+      );
+      assert.equal(
+        resolveShortcutCommand(
+          event({ key: "r", metaKey: platform === "MacIntel", ctrlKey: platform !== "MacIntel" }),
+          DEFAULT_RESOLVED_KEYBINDINGS,
+          { platform, context: { previewFocus: true } },
+        ),
+        "preview.refresh",
+      );
+      assert.isNull(
+        resolveShortcutCommand(input, DEFAULT_RESOLVED_KEYBINDINGS, {
+          platform,
+          context: { terminalFocus: true },
+        }),
+      );
+    },
+  );
+});
+
 describe("settle thread shortcut", () => {
   it("does not intercept the terminal", () => {
     assert.isNull(
