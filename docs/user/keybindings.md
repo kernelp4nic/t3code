@@ -3,6 +3,9 @@
 Customize shortcuts in **Settings → Keybindings** on web and desktop. That page
 also lists the command IDs and defaults available in your version.
 
+Use `F2` to rename the current thread. On Mac keyboards with media keys, use
+`Fn+F2`. The shortcut leaves terminal and browser panel input unchanged.
+
 ## Composer controls
 
 `mod+shift+d` starts dictation in the focused editor, or the composer, and finishes it on the next press;

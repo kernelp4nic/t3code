@@ -319,6 +319,15 @@ it("opens the thread actions menu for an older settled thread the shell leaves o
   await expect
     .element(page.getByRole("menuitem", { name: "Rename thread" }), { timeout: 5_000 })
     .toBeVisible();
+  await userEvent.keyboard("{Escape}");
+  await userEvent.keyboard("{F2}");
+  await expect
+    .element(page.getByRole("textbox", { name: "Thread title", exact: true }))
+    .toHaveValue(thread.title);
+  await userEvent.keyboard("{Escape}");
+  await expect
+    .element(page.getByRole("button", { name: `Thread actions for ${thread.title}` }))
+    .toBeVisible();
 });
 
 it("retains each thread's diff selection when returning from another thread or Settings", async () => {
